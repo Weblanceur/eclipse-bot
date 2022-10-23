@@ -46,7 +46,7 @@ export class BotService {
       // Если это уведомление для подтверждения адреса...
       case 'confirmation':
         // ...отправляем строку для подтверждения
-        return bot.settings.vkConfirm
+        return `${bot.settings.vkConfirm}`
       // Если это уведомление о новом сообщении...
       case 'message_new':
         // Проверка типа бота и постановка соответствующих задач
