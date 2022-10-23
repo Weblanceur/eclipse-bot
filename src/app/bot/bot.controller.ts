@@ -23,7 +23,8 @@ export class BotController {
   }
 
   @Post(':id')
-  start(@Body() body, @Param() params, @Res() res) {
-    return res.status(HttpStatus.OK).send(this.botService.runBot(body, params.id))
+  async start(@Body() body, @Param() params, @Res() res) {
+    const result = await this.botService.runBot(body, params.id)
+    res.status(HttpStatus.OK).send(result)
   }
 }
