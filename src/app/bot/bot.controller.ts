@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Res } from '@nestjs/common'
 import { BotService } from './bot.service'
 import { InjectQueue } from '@nestjs/bull'
 import { Queue } from 'bull'
@@ -23,7 +23,7 @@ export class BotController {
   }
 
   @Post(':id')
-  start(@Body() body, @Param() params) {
-    return this.botService.runBot(body, params.id)
+  start(@Body() body, @Param() params, @Res() res) {
+    return res.status(HttpStatus.OK).send(this.botService.runBot(body, params.id))
   }
 }
