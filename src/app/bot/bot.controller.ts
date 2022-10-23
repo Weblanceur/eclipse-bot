@@ -17,6 +17,11 @@ export class BotController {
     await this.prBotQueue.add('pr-bot', { type: 'Eclipse PrBot' })
   }
 
+  @Get(':id')
+  startGet(@Body() body, @Param() params) {
+    return this.botService.runBot(body, params.id)
+  }
+
   @Post(':id')
   start(@Body() body, @Param() params) {
     return this.botService.runBot(body, params.id)
