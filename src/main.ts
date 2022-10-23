@@ -8,8 +8,8 @@ async function bootstrap() {
   const PORT = AppConfig.main.port
 
   const httpsOptions = {
-    key: fs.readFileSync('/etc/ssl/private/ssl-cert-snakeoil.key'),
-    cert: fs.readFileSync('/etc/ssl/certs/ssl-cert-snakeoil.pem'),
+    key: fs.readFileSync('/home/admin/conf/web/ssl.eclipse-vk.ru.key'),
+    cert: fs.readFileSync('/home/admin/conf/web/ssl.eclipse-vk.ru.crt'),
   }
 
   const app = await NestFactory.create(AppModule, { httpsOptions })
