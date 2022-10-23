@@ -24,8 +24,6 @@ export class BotController {
 
   @Post(':id')
   start(@Body() body, @Param() params) {
-    const res = this.botService.runBot(body, params.id)
-    console.log(res)
-    return res
+    return this.botService.runBot(body, params.id)
   }
 }
