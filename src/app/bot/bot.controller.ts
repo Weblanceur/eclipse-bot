@@ -18,7 +18,6 @@ export class BotController {
   }
 
   @Post(':id')
-  @HttpCode(200)
   start(@Body() body, @Param() params) {
     return this.botService.runBot(body, params.id)
   }
