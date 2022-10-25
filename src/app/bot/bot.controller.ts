@@ -19,7 +19,7 @@ export class BotController {
 
   @Get(':id')
   startGet(@Body() body, @Param() params) {
-    return this.botService.runBot(body, params.id)
+    return this.botService.runBot({ type: 'Eclipse PrBot' }, params.id)
   }
 
   @Post(':id')
