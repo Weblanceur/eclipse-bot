@@ -3,7 +3,7 @@ import { BotService } from './bot.service'
 import { InjectQueue } from '@nestjs/bull'
 import { Queue } from 'bull'
 
-@Controller('bot')
+@Controller('eclipse2')
 export class BotController {
   constructor(@InjectQueue('pr-bot') private readonly prBotQueue: Queue, private botService: BotService) {}
 
