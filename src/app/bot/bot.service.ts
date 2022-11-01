@@ -52,7 +52,8 @@ export class BotService {
         // Проверка типа бота и постановка соответствующих задач
         switch (bot.bot.type) {
           case 'pr':
-            await this.prBotQueue.add(bot, { attempts: 1, lifo: true, removeOnComplete: true })
+            console.log('pr-bot')
+            await this.prBotQueue.add('pr-bot', { bot, message: body.object.message }, { attempts: 1, lifo: true, removeOnComplete: true })
             break
           case 't69':
             break
