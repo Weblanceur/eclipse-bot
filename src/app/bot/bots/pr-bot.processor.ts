@@ -25,7 +25,7 @@ export class PrBotProcessor {
     const botSettings = job.data.bot.settings
 
     // Подключаем бибилиотеку АПИ ВК с токеном группы
-    const vk = new VK({ token: botSettings.vkAccessKey, language: 'ru', apiVersion: '5.131' })
+    const vk = new VK({ token: botSettings.vkAccessKey })
 
     // Отправляемое сообщение (заполняется в процессе обработки)
     let message = null
@@ -50,10 +50,11 @@ export class PrBotProcessor {
       await this.chatsService.setSettings(chat, newSetting)
       keyboard = await this.chatsService.getKeyboardForSettings(validationError)
     }
-    this.logger.error('Объект клавиатуры:', keyboard)
-    this.logger.error('Сообщение:', message)
 
+    // Отправляем сообщение
     if (message) {
+      this.logger.error('Сообщение:', message)
+      this.logger.error('Объект клавиатуры:', keyboard)
       const send = await vk.api.messages.send({
         peer_id: peer || from,
         group_id: botSettings.group_id,
@@ -61,6 +62,8 @@ export class PrBotProcessor {
         keyboard,
         expire_ttl: 3600,
         random_id: getRandomInt(),
+        lang: 'ru',
+        v: 5.131,
       })
       console.log(send)
     }
