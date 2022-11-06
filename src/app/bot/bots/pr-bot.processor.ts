@@ -65,7 +65,7 @@ export class PrBotProcessor {
         lang: 'ru',
         v: 5.131,
       })
-      console.log(send)
+      console.log('send', send)
     }
 
     this.logger.debug('Pr Bot job completed')
