@@ -69,8 +69,8 @@ export class PrBotProcessor {
         await vk.api.messages.send({
           peer_id: peer || from,
           group_id: botSettings.group_id,
-          message,
-          keyboard,
+          message: message,
+          keyboard: keyboard,
         }),
       )
     }
