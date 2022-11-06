@@ -2,6 +2,8 @@ import { Process, Processor } from '@nestjs/bull'
 import { Logger } from '@nestjs/common'
 import { Job } from 'bull'
 import { ChatsService } from './chats.service'
+import { VK } from 'vk-io'
+import getRandomInt from '../../../utils/getRandomInt'
 
 @Processor('pr-bot')
 export class PrBotProcessor {
@@ -22,11 +24,15 @@ export class PrBotProcessor {
     const bot = job.data.bot
     const botSettings = job.data.bot.settings
 
+    // Подключаем бибилиотеку АПИ ВК с токеном группы
+    const vk = new VK({ token: botSettings.vkAccessKey, language: 'ru', apiVersion: '5.131' })
+
+    // Отправляемое сообщение (заполняется в процессе обработки)
     let message = null
     // Объект клавиатуры, пока пустой
     let keyboard = null
 
-    // Только для бесед
+    // Только для бесед (настройка чата)
     if (peer) {
       // Валидация настроек для чата
       // Стартовый шаг валидации
@@ -47,9 +53,18 @@ export class PrBotProcessor {
     this.logger.error('Объект клавиатуры:', keyboard)
     this.logger.error('Сообщение:', message)
 
-    this.logger.warn(job.data.bot)
-    this.logger.debug('Start pr-bot...')
-    await this.logger.debug(job.data.message)
+    if (message) {
+      const send = await vk.api.messages.send({
+        peer_id: peer || from,
+        group_id: botSettings.group_id,
+        message,
+        keyboard,
+        expire_ttl: 3600,
+        random_id: getRandomInt(),
+      })
+      console.log(send)
+    }
+
     this.logger.debug('Pr Bot job completed')
     return
   }

@@ -42,6 +42,9 @@ export class BotService {
     // Выход, если секретный ключ не совпадает
     if (bot.settings.vkSecret != body.secret) return `Неверный секретный ключ, ид: [${id}]`
 
+    // Выход, если не указан токен группы
+    if (bot.settings.vkAccessKey) return `Не указан токен группы, ид группы: [${body.group_id}]`
+
     // Проверяем, что находится в поле "type"
     switch (body.type) {
       // Если это уведомление для подтверждения адреса...
