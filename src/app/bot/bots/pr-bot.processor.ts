@@ -3,6 +3,7 @@ import { Logger } from '@nestjs/common'
 import { Job } from 'bull'
 import { ChatsService } from './chats.service'
 import { VK } from 'vk-io'
+import getRandomInt from '../../../utils/getRandomInt'
 
 @Processor('pr-bot')
 export class PrBotProcessor {
@@ -24,7 +25,7 @@ export class PrBotProcessor {
     const botSettings = job.data.bot.settings
 
     // Подключаем бибилиотеку АПИ ВК с токеном группы
-    const vk = await new VK({ token: botSettings.vkAccessKey })
+    const vk = new VK({ token: botSettings.vkAccessKey })
 
     // Отправляемое сообщение (заполняется в процессе обработки)
     let message = null
@@ -66,10 +67,10 @@ export class PrBotProcessor {
       })*/
       console.log(
         await vk.api.messages.send({
-          access_token: botSettings.vkAccessKey,
-          peer_id: peer || from,
+          peer_id: peer,
           group_id: botSettings.group_id,
-          message,
+          message: message,
+          keyboard: keyboard,
         }),
       )
     }
