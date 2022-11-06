@@ -55,7 +55,7 @@ export class PrBotProcessor {
     if (message) {
       this.logger.error('Сообщение:', message)
       this.logger.error('Объект клавиатуры:', keyboard)
-      const send = await vk.api.messages.send({
+      /*const send = await vk.api.messages.send({
         peer_id: peer || from,
         group_id: botSettings.group_id,
         message,
@@ -64,8 +64,19 @@ export class PrBotProcessor {
         random_id: getRandomInt(),
         lang: 'ru',
         v: 5.131,
-      })
-      console.log('send', send)
+      })*/
+      console.log(
+        await vk.api.messages.send({
+          peer_id: peer || from,
+          group_id: botSettings.group_id,
+          message,
+          keyboard,
+          expire_ttl: 3600,
+          random_id: getRandomInt(),
+          lang: 'ru',
+          v: 5.131,
+        }),
+      )
     }
 
     this.logger.debug('Pr Bot job completed')
