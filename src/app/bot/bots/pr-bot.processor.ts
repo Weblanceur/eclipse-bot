@@ -22,6 +22,7 @@ export class PrBotProcessor {
     const bot = job.data.bot
     const botSettings = job.data.bot.settings
 
+    let message = null
     // Объект клавиатуры, пока пустой
     let keyboard = null
 
@@ -34,13 +35,17 @@ export class PrBotProcessor {
       this.logger.verbose(`Ищем чат в базе, peerId [${peer}]`)
       const chat = await this.chatsService.getChatByPeerId(peer)
       if (chat) {
-        console.log(await this.chatsService.validateSettings(newSetting))
+        const validation = await this.chatsService.validateSettings(newSetting)
+        console.log(validation)
+        validationError = validation[0].property
+        message = Object.values(validation[0].constraints)[0]
       }
 
       await this.chatsService.setSettings(chat, newSetting)
       keyboard = await this.chatsService.getKeyboardForSettings(validationError)
     }
     this.logger.error('Объект клавиатуры:', keyboard)
+    this.logger.error('Сообщение:', message)
 
     this.logger.warn(job.data.bot)
     this.logger.debug('Start pr-bot...')
