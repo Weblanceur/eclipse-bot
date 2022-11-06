@@ -71,8 +71,6 @@ export class PrBotProcessor {
           group_id: botSettings.group_id,
           message,
           keyboard,
-          expire_ttl: 3600,
-          random_id: getRandomInt(),
         }),
       )
     }
