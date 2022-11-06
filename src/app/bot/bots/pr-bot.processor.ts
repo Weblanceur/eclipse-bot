@@ -73,8 +73,6 @@ export class PrBotProcessor {
           keyboard,
           expire_ttl: 3600,
           random_id: getRandomInt(),
-          lang: 'ru',
-          v: 5.131,
         }),
       )
     }
