@@ -5,6 +5,7 @@ import { BotSettings } from '../../models/bots/bots-settings.model'
 import { Bots } from '../../models/bots/bots.model'
 import { InjectQueue } from '@nestjs/bull'
 import { Queue } from 'bull'
+import { User } from '../../models/users/users.model'
 
 @Injectable()
 export class BotService {
@@ -23,7 +24,7 @@ export class BotService {
     const bot = await this.userBots.findOne({
       where: { id },
       attributes: ['id', 'run'],
-      include: [BotSettings, Bots],
+      include: [User, BotSettings, Bots],
     })
 
     // Выход, если бот не найден
@@ -52,7 +53,6 @@ export class BotService {
         // Проверка типа бота и постановка соответствующих задач
         switch (bot.bot.type) {
           case 'pr':
-            console.log('pr-bot')
             await this.prBotQueue.add('pr-bot', { bot, message: body.object.message }, { attempts: 1, lifo: true, removeOnComplete: true })
             break
           case 't69':

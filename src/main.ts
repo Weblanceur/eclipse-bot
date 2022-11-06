@@ -19,6 +19,7 @@ async function bootstrap() {
     credentials: true,
     methods: ['GET', 'POST', 'DELETE'],
   })
+
   await app.listen(PORT, () => {
     console.log(`Eclipse PR Bot started at ${PORT}`)
   })

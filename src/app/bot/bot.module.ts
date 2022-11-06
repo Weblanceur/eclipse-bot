@@ -8,12 +8,14 @@ import { UsersBots } from '../../models/users/users-bots.model'
 import { BotSettings } from '../../models/bots/bots-settings.model'
 import { BullModule } from '@nestjs/bull'
 import { PrBotProcessor } from './bots/pr-bot.processor'
+import { ChatsService } from './bots/chats.service'
+import { BotChats } from '../../models/bots/bots-chats.model'
 
 @Module({
-  providers: [BotService, PrBotProcessor],
+  providers: [BotService, PrBotProcessor, ChatsService],
   controllers: [BotController],
   imports: [
-    SequelizeModule.forFeature([User, Bots, UsersBots, BotSettings]),
+    SequelizeModule.forFeature([User, Bots, UsersBots, BotSettings, BotChats]),
     BullModule.registerQueue({
       name: 'pr-bot',
     }),
