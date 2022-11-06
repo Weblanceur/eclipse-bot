@@ -70,8 +70,7 @@ export class PrBotProcessor {
           access_token: botSettings.vkAccessKey,
           peer_id: peer || from,
           group_id: botSettings.group_id,
-          message: message,
-          keyboard: keyboard,
+          message,
         }),
       )
     }
