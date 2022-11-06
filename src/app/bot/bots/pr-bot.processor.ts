@@ -30,7 +30,7 @@ export class PrBotProcessor {
       // Валидация настроек для чата
       // Стартовый шаг валидации
       let validationError = 'target'
-      let newSetting = { botId: bot.id, peerId: peer, target: 'like', admins: null }
+      let newSetting = { botId: bot.id, peerId: peer }
       this.logger.verbose(`Ищем чат в базе, peerId [${peer}]`)
       const chat = await this.chatsService.getChatByPeerId(peer)
       if (chat) {
