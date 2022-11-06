@@ -67,6 +67,7 @@ export class PrBotProcessor {
       })*/
       console.log(
         await vk.api.messages.send({
+          access_token: botSettings.vkAccessKey,
           peer_id: peer || from,
           group_id: botSettings.group_id,
           message: message,
